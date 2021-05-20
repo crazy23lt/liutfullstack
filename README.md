@@ -4,14 +4,22 @@ NodeJS+VueJS 全栈之巅教程 - 个人学习
 
 ## 项目目录结构
 
+_创建两个服务，后台系统与客户端系统_
+
 - `server` 服务端
   - `apps - admin` 客户端服务
   - `apps - server` 后台系统服务
 
 ## server
 
-- `/server:nest g app admin` 创建子应用
-- `/server:nest g lib db` 创建子应用公共模块
+_子应用公共模块例如连接数据库等数据库操作_
+
+- `nest g app admin` 创建子应用
+- `nest g lib db` 创建子应用公共模块
+
+_创建子应用，通过 npm 运行子应用项目，对 package.json 的 scripts 进行修改_
+
+- `start_admin:dev": "nest start --watch admin`
 
 ## module
 
@@ -25,6 +33,8 @@ NodeJS+VueJS 全栈之巅教程 - 个人学习
 
 ## 其他命令
 
+_通过 nest 命令来运行子应用的服务_
+
 - `nest start --watch admin` 运行监听 admin 子应用
 
 ## NestJS 连接 MongoDB 数据库
@@ -32,6 +42,12 @@ NodeJS+VueJS 全栈之巅教程 - 个人学习
 `npm i --save nestjs-typegoose @typegoose/typegoose`
 
 `npm i --save mongoose @types/mongoose`
+
+_在`db.module.ts`模块中进行连接数据操作_
+
+_主要用到`TypegooseModule.forRoot()`、`TypegooseModule.forFeature()`_
+
+_admin 子应用的跟模块同时需要导入 db 模块_
 
 ## NestJS 生成接口文档
 

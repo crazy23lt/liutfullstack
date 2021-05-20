@@ -14,5 +14,4 @@ export class EpisodesController {
     @InjectModel(Episode)
     private readonly model: ReturnModelType<typeof Episode>,
   ) {}
-  // ↑ 注入Course模型 ↑ 私有、只读 ↑ 定义类型-泛型 ↑
 }

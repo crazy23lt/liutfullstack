@@ -52,3 +52,19 @@ _admin 子应用的跟模块同时需要导入 db 模块_
 ## NestJS 生成接口文档
 
 `npm i --save-dev @nestjs/swagger swagger-ui-express`
+
+## npm 如何管理分支(给分支加上描述)
+
+_分支加上描述_
+
+- `git config branch.[branch.name].description [描述]`
+
+_查看分支描述_
+
+- `git config branch.[branch.name].description`
+
+_`git-br`工具_
+
+- `npm i -g git-br`
+
+- `git br`

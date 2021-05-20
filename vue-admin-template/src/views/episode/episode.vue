@@ -1,5 +1,5 @@
 <template>
-  <div>Episode</div>
+  <div>episode</div>
 </template>
 
 <script>

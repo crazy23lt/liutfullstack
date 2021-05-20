@@ -166,20 +166,20 @@ export const constantRoutes = [
   {
     path: "/content",
     component: Layout,
-    redirect: "/content/course",
+    redirect: "/content/course-list",
     name: "Content",
     meta: { title: "Content", icon: "el-icon-folder" },
     children: [
       {
-        path: "course",
-        name: "Course",
-        component: () => import("@/views/table/course"),
-        meta: { title: "Course", icon: "el-icon-tickets" }
+        path: "course-list",
+        name: "CourseList",
+        component: () => import("@/views/course/courseList"),
+        meta: { title: "CourseList", icon: "el-icon-tickets" }
       },
       {
         path: "episode",
         name: "Episode",
-        component: () => import("@/views/table/episode"),
+        component: () => import("@/views/episode/episode"),
         meta: { title: "Episode", icon: "el-icon-tickets" }
       }
     ]
@@ -194,8 +194,47 @@ export const constantRoutes = [
       {
         path: "user",
         name: "User",
-        component: () => import("@/views/table/user"),
+        component: () => import("@/views/user/userList"),
         meta: { title: "User", icon: "el-icon-tickets" }
+      }
+    ]
+  },
+  {
+    path: "/edit",
+    component: Layout,
+    name: "Edit",
+    hidden: true,
+    children: [
+      {
+        path: "course/:id",
+        name: "CourseEdit",
+        component: () => import("@/views/course/courseEdit")
+      }
+    ]
+  },
+  {
+    path: "/create",
+    component: Layout,
+    name: "Create",
+    hidden: true,
+    children: [
+      {
+        path: "course",
+        name: "CourseCreate",
+        component: () => import("@/views/course/courseCreate")
+      }
+    ]
+  },
+  {
+    path: "/details",
+    component: Layout,
+    name: "Details",
+    hidden: true,
+    children: [
+      {
+        path: "course",
+        name: "CourseDetails",
+        component: () => import("@/views/course/courseDetails")
       }
     ]
   },

@@ -5,7 +5,8 @@ import "normalize.css/normalize.css"; // A modern alternative to CSS resets
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import locale from "element-ui/lib/locale/lang/en"; // lang i18n
-
+import EleForm from "vue-ele-form";
+import { Notification } from "element-ui";
 import "@/styles/index.scss"; // global css
 
 import App from "./App";
@@ -30,9 +31,10 @@ import "@/permission"; // permission control
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale });
+Vue.use(EleForm);
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
-
+Vue.prototype.$notify = Notification;
 Vue.config.productionTip = false;
 
 new Vue({

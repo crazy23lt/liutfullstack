@@ -1,5 +1,5 @@
 <template>
-  <div>Course</div>
+  <div>courseDetails</div>
 </template>
 
 <script>

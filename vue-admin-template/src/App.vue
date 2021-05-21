@@ -6,6 +6,12 @@
 
 <script>
 export default {
-  name: 'App'
-}
+  name: "App"
+};
 </script>
+
+<style>
+.liut-container {
+  margin-top: 30px;
+}
+</style>

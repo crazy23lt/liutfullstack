@@ -50,7 +50,7 @@ export const constantRoutes = [
         path: "dashboard",
         name: "Dashboard",
         component: () => import("@/views/dashboard/index"),
-        meta: { title: "Dashboard", icon: "dashboard" }
+        meta: { title: "后台首页", icon: "dashboard" }
       }
     ]
   },
@@ -59,19 +59,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: "/content/course-list",
     name: "Content",
-    meta: { title: "Content", icon: "el-icon-folder" },
+    meta: { title: "资源管理", icon: "el-icon-folder" },
     children: [
       {
         path: "course-list",
         name: "CourseList",
         component: () => import("@/views/course/courseList"),
-        meta: { title: "CourseList", icon: "el-icon-tickets" }
+        meta: { title: "课程", icon: "el-icon-tickets" }
       },
       {
         path: "episode",
         name: "Episode",
         component: () => import("@/views/episode/episode"),
-        meta: { title: "Episode", icon: "el-icon-tickets" }
+        meta: { title: "课时", icon: "el-icon-tickets" }
       },
       {
         path: "course/list",
@@ -86,13 +86,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: "/operate/user",
     name: "Operate",
-    meta: { title: "Operate", icon: "el-icon-folder" },
+    meta: { title: "运营管理", icon: "el-icon-folder" },
     children: [
       {
         path: "user",
         name: "User",
         component: () => import("@/views/user/userList"),
-        meta: { title: "User", icon: "el-icon-tickets" }
+        meta: { title: "用户", icon: "el-icon-tickets" }
       }
     ]
   },

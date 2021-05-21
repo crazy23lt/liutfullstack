@@ -1,5 +1,5 @@
 import { User } from '@libs/db/models/user.model';
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { Crud } from 'nestjs-mongoose-crud';
 import { ApiTags } from '@nestjs/swagger';
@@ -13,4 +13,29 @@ import { ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(@InjectModel(User) private readonly model) {}
   // ↑ 注入模型 ↑ 私有只读属性 ↑ model[crud] ↑
+  @Get('options')
+  avueOptions() {
+    return {
+      title: '用户管理',
+      titleSize: 'h3',
+      titleStyle: {
+        color: 'gray',
+      },
+      border: true,
+      stripe: true,
+      page: false,
+      align: 'center',
+      menuAlign: 'center',
+      column: [
+        {
+          label: '用户账号',
+          prop: 'username',
+        },
+        {
+          label: '用户密码',
+          prop: 'password',
+        },
+      ],
+    };
+  }
 }

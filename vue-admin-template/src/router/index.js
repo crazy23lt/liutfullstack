@@ -57,84 +57,48 @@ export const constantRoutes = [
   {
     path: "/content",
     component: Layout,
-    redirect: "/content/course-list",
+    redirect: "/content/course/crud",
     name: "Content",
     meta: { title: "资源管理", icon: "el-icon-folder" },
     children: [
       {
-        path: "course-list",
-        name: "CourseList",
-        component: () => import("@/views/course/courseList"),
-        meta: { title: "课程", icon: "el-icon-tickets" }
-      },
-      {
-        path: "episode",
-        name: "Episode",
-        component: () => import("@/views/episode/episode"),
-        meta: { title: "课时", icon: "el-icon-tickets" }
-      },
-      {
-        path: "course/list",
+        path: "course/crud",
         name: "course-crud",
-        meta: { title: "CourseCrud", icon: "el-icon-tickets" },
-        component: () => import("@/views/course/courseCrud")
+        meta: {
+          title: "课程管理",
+          icon: "el-icon-tickets",
+          resources: "courses"
+        },
+        component: () => import("@/views/resourcesCrud")
+      },
+      {
+        path: "episode/crud",
+        name: "episode-crud",
+        meta: {
+          title: "课时管理",
+          icon: "el-icon-tickets",
+          resources: "episodes"
+        },
+        component: () => import("@/views/resourcesCrud")
       }
     ]
   },
   {
     path: "/operate",
     component: Layout,
-    redirect: "/operate/user",
+    redirect: "/operate/user/crud",
     name: "Operate",
     meta: { title: "运营管理", icon: "el-icon-folder" },
     children: [
       {
-        path: "user",
+        path: "user/crud",
         name: "User",
-        component: () => import("@/views/user/userList"),
-        meta: { title: "用户", icon: "el-icon-tickets" }
+        component: () => import("@/views/resourcesCrud"),
+        meta: { title: "用户管理", icon: "el-icon-tickets", resources: "users" }
       }
     ]
   },
-  {
-    path: "/edit",
-    component: Layout,
-    name: "Edit",
-    hidden: true,
-    children: [
-      {
-        path: "course/:id",
-        name: "CourseEdit",
-        component: () => import("@/views/course/courseEdit")
-      }
-    ]
-  },
-  {
-    path: "/create",
-    component: Layout,
-    name: "Create",
-    hidden: true,
-    children: [
-      {
-        path: "course",
-        name: "CourseCreate",
-        component: () => import("@/views/course/courseCreate")
-      }
-    ]
-  },
-  {
-    path: "/details",
-    component: Layout,
-    name: "Details",
-    hidden: true,
-    children: [
-      {
-        path: "course",
-        name: "CourseDetails",
-        component: () => import("@/views/course/courseDetails")
-      }
-    ]
-  },
+
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true }
 ];

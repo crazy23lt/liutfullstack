@@ -6,11 +6,12 @@ export function resourcesOption({ url }) {
     auth: true
   });
 }
-export function resourcesAll({ url }) {
+export function resourcesAll({ url, params = {} }) {
   return request({
     url: `/${url}`,
     method: "get",
-    auth: true
+    auth: true,
+    params
   });
 }
 export function resourcesDetails({ url, id }) {

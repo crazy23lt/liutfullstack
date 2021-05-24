@@ -71,4 +71,13 @@ _`git-br`工具_
 
 - `git br`
 
+### Mongoose-crud
+
+_条件查询(query)_
+
+- `{"limit":2,"page",2}`
+- `{"sort":{"_id":-1}}`
+- `{"where":{"name":{"$regex":"awdawd}}}`
+- `{"limit":2,"page",2}`
+
 ## 前端

@@ -3,6 +3,7 @@
     <el-col :span="22" :offset="1">
       <el-card class="box-card">
         <avue-crud
+          ref="crud"
           :table-loading="loading"
           :data="data"
           :option="option"
@@ -10,6 +11,8 @@
           @row-save="rowSave"
           @row-update="rowUpdate"
           @row-del="rowDel"
+          :page.sync="page"
+          @on-load="getResourcesList"
         ></avue-crud>
       </el-card>
     </el-col>
@@ -31,13 +34,13 @@ export default {
       url: "",
       loading: true,
       data: [],
-      option: {}
+      option: {},
+      page: {}
     };
   },
   computed: {
     model() {
       let model = {};
-
       this.option.column.forEach(col => {
         model[col.prop] = null;
       });
@@ -48,14 +51,20 @@ export default {
     this.url = this.$route.meta.resources;
     let res = await resourcesOption({ url: this.url });
     this.option = res;
+    this.$nextTick(() => {
+      this.loading = false;
+      this.$refs.crud.init();
+      this.$refs.crud.columnInit();
+      console.info(this.$refs.crud);
+    });
   },
-  mounted() {
-    this.getResourcesList();
-  },
+  mounted() {},
   methods: {
-    async getResourcesList() {
-      let res = await resourcesAll({ url: this.url });
+    async getResourcesList(page) {
+      let query = { limit: page.pageSize, page: page.currentPage };
+      let res = await resourcesAll({ url: this.url, params: { query } });
       this.data = res.data;
+      this.page.total = res.total;
       this.$nextTick(() => {
         this.loading = false;
       });

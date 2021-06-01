@@ -16,6 +16,12 @@
           @sort-change="sortChange"
           @search-change="searchChange"
           @search-reset="searchReset"
+          :upload-preview="uploadPreview"
+          :upload-error="uploadError"
+          :upload-exceed="uploadExceed"
+          :upload-delete="uploadDelete"
+          :upload-before="uploadBefore"
+          :upload-after="uploadAfter"
         ></avue-crud>
       </el-card>
     </el-col>
@@ -186,7 +192,22 @@ export default {
     searchReset(where) {
       this.query.where = null;
       this.getResourcesList(this.pageInfo);
-    }
+    },
+    // ↓ 上传查看前的回调 ↓
+    uploadPreview(file, column, done) {
+      console.info(file, column);
+      done(); //默认执行打开方法
+    },
+    // ↓ 上传失败错误回调 ↓
+    uploadError(error, column) {},
+    // ↓ 上传超过长度限制回调 ↓
+    uploadExceed(limit, files, fileList, column) {},
+    // ↓ 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止删除 ↓
+    uploadDelete(file, column) {},
+    // ↓ 上传前的回调 done用于继续图片上传，loading用于中断操作 ↓
+    uploadBefore(file, done, loading) {},
+    // ↓ 上传后的回调 done用于结束操作，loading用于中断操作 ↓
+    uploadAfter(res, done) {}
   }
 };
 </script>

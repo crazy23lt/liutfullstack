@@ -24,17 +24,27 @@ export class CoursesController {
       },
       border: true,
       stripe: true,
-      page: false,
+      page: true,
       align: 'center',
       menuAlign: 'center',
+      searchMenuPosition: 'right',
+      searchSize:"mini",
+      searchMenuSpan:6,
       column: [
         {
           label: '课程名称',
           prop: 'name',
+          sortable:true,
+          search: true,
+          searchPlaceholder: '课程名称',
+          searchLabelWidth:120,
+          searchSpan:18,
+          regex:false
         },
         {
           label: '课程课时',
           prop: 'cover',
+          sortable:true,
         },
       ],
     };

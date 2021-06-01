@@ -11,14 +11,16 @@
           @row-save="rowSave"
           @row-update="rowUpdate"
           @row-del="rowDel"
-          :page.sync="page"
-          @on-load="getResourcesList"
+          :page.sync="pageInfo"
+          @on-load="onLoad"
+          @sort-change="sortChange"
+          @search-change="searchChange"
+          @search-reset="searchReset"
         ></avue-crud>
       </el-card>
     </el-col>
   </el-row>
 </template>
-
 <script>
 import {
   resourcesAll,
@@ -35,7 +37,13 @@ export default {
       loading: true,
       data: [],
       option: {},
-      page: {}
+      pageInfo: {
+        pageSize: 5,
+        pagerCount: 5,
+        pageSizes: [2, 5, 10]
+      },
+      // ↓ 条件查询 ↓
+      query: {}
     };
   },
   computed: {
@@ -47,27 +55,37 @@ export default {
       return model;
     }
   },
-  async created() {
+  created() {
     this.url = this.$route.meta.resources;
+  },
+  async mounted() {
     let res = await resourcesOption({ url: this.url });
     this.option = res;
     this.$nextTick(() => {
       this.loading = false;
       this.$refs.crud.init();
-      this.$refs.crud.columnInit();
-      console.info(this.$refs.crud);
     });
   },
-  mounted() {},
   methods: {
-    async getResourcesList(page) {
+    onLoad(page) {
+      this.getResourcesList(page);
+    },
+    getResourcesList(page) {
       let query = { limit: page.pageSize, page: page.currentPage };
-      let res = await resourcesAll({ url: this.url, params: { query } });
-      this.data = res.data;
-      this.page.total = res.total;
-      this.$nextTick(() => {
-        this.loading = false;
-      });
+      resourcesAll({
+        url: this.url,
+        params: { query: Object.assign(query, this.query) }
+      })
+        .then(res => {
+          this.data = res.data;
+          this.pageInfo.total = res.total;
+          this.$nextTick(() => {
+            this.loading = false;
+          });
+        })
+        .catch(err => {
+          console.info(err);
+        });
     },
     async rowSave(form, done, loading) {
       for (const key in this.model) {
@@ -86,7 +104,7 @@ export default {
           type: "success"
         });
         done(form);
-        this.getResourcesList();
+        this.getResourcesList(this.pageInfo);
       } else {
         this.$notify({
           title: "失败",
@@ -95,8 +113,8 @@ export default {
         });
       }
     },
-    refresh(val) {
-      this.getResourcesList();
+    refresh() {
+      this.getResourcesList(this.pageInfo);
     },
     async rowDel(form, index) {
       let res = await resourcesDel({ url: this.url, id: form._id });
@@ -106,7 +124,7 @@ export default {
           message: "课程删除成功",
           type: "success"
         });
-        this.getResourcesList();
+        this.getResourcesList(this.pageInfo);
       } else {
         this.$notify({
           title: "失败",
@@ -134,7 +152,7 @@ export default {
           type: "success"
         });
         done();
-        this.getResourcesList();
+        this.getResourcesList(this.pageInfo);
       } else {
         this.$notify({
           title: "失败",
@@ -142,9 +160,34 @@ export default {
           type: "error"
         });
       }
+    },
+    // ↓ 表格字段排序回调 ↓
+    sortChange({ order, prop }) {
+      if (!order) {
+        this.query.sort = null;
+      } else {
+        this.query.sort = { [prop]: order === "ascending" ? 1 : -1 };
+      }
+      this.getResourcesList(this.pageInfo);
+    },
+    // ↓ 表格字段搜索 ↓
+    async searchChange(where, done) {
+      for (const key in where) {
+        let field = this.option.column.find(v => v.prop === key);
+        if (field.regex) {
+          where[key] = { $regex: where[key] };
+        }
+      }
+      this.query.where = where;
+      await this.getResourcesList(this.pageInfo);
+      done();
+    },
+    // ↓ 重置 表格字段搜索 ↓
+    searchReset(where) {
+      this.query.where = null;
+      this.getResourcesList(this.pageInfo);
     }
   }
 };
 </script>
-
 <style></style>

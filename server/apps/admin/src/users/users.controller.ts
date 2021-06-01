@@ -23,17 +23,27 @@ export class UsersController {
       },
       border: true,
       stripe: true,
-      page: false,
+      page: true,
       align: 'center',
       menuAlign: 'center',
+      searchMenuPosition: 'right',
+      searchSize:"mini",
+      searchMenuSpan:6,
       column: [
         {
           label: '用户账号',
           prop: 'username',
+          sortable: true,
+          search: true,
+          searchPlaceholder: '用户账号',
+          searchLabelWidth:120,
+          searchSpan:18,
+          regex:true
         },
         {
           label: '用户密码',
           prop: 'password',
+          sortable: true,
         },
       ],
     };

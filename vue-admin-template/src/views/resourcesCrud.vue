@@ -3,6 +3,7 @@
     <el-col :span="22" :offset="1">
       <el-card class="box-card">
         <avue-crud
+          ref="crud"
           :table-loading="loading"
           :data="data"
           :option="option"
@@ -10,12 +11,22 @@
           @row-save="rowSave"
           @row-update="rowUpdate"
           @row-del="rowDel"
+          :page.sync="pageInfo"
+          @on-load="onLoad"
+          @sort-change="sortChange"
+          @search-change="searchChange"
+          @search-reset="searchReset"
+          :upload-preview="uploadPreview"
+          :upload-error="uploadError"
+          :upload-exceed="uploadExceed"
+          :upload-delete="uploadDelete"
+          :upload-before="uploadBefore"
+          :upload-after="uploadAfter"
         ></avue-crud>
       </el-card>
     </el-col>
   </el-row>
 </template>
-
 <script>
 import {
   resourcesAll,
@@ -31,34 +42,56 @@ export default {
       url: "",
       loading: true,
       data: [],
-      option: {}
+      option: {},
+      pageInfo: {
+        pageSize: 5,
+        pagerCount: 5,
+        pageSizes: [2, 5, 10]
+      },
+      // ↓ 条件查询 ↓
+      query: {}
     };
   },
   computed: {
     model() {
       let model = {};
-
       this.option.column.forEach(col => {
         model[col.prop] = null;
       });
       return model;
     }
   },
-  async created() {
+  created() {
     this.url = this.$route.meta.resources;
+  },
+  async mounted() {
     let res = await resourcesOption({ url: this.url });
     this.option = res;
-  },
-  mounted() {
-    this.getResourcesList();
+    this.$nextTick(() => {
+      this.loading = false;
+      this.$refs.crud.init();
+    });
   },
   methods: {
-    async getResourcesList() {
-      let res = await resourcesAll({ url: this.url });
-      this.data = res.data;
-      this.$nextTick(() => {
-        this.loading = false;
-      });
+    onLoad(page) {
+      this.getResourcesList(page);
+    },
+    getResourcesList(page) {
+      let query = { limit: page.pageSize, page: page.currentPage };
+      resourcesAll({
+        url: this.url,
+        params: { query: Object.assign(query, this.query) }
+      })
+        .then(res => {
+          this.data = res.data;
+          this.pageInfo.total = res.total;
+          this.$nextTick(() => {
+            this.loading = false;
+          });
+        })
+        .catch(err => {
+          console.info(err);
+        });
     },
     async rowSave(form, done, loading) {
       for (const key in this.model) {
@@ -77,7 +110,7 @@ export default {
           type: "success"
         });
         done(form);
-        this.getResourcesList();
+        this.getResourcesList(this.pageInfo);
       } else {
         this.$notify({
           title: "失败",
@@ -86,8 +119,8 @@ export default {
         });
       }
     },
-    refresh(val) {
-      this.getResourcesList();
+    refresh() {
+      this.getResourcesList(this.pageInfo);
     },
     async rowDel(form, index) {
       let res = await resourcesDel({ url: this.url, id: form._id });
@@ -97,7 +130,7 @@ export default {
           message: "课程删除成功",
           type: "success"
         });
-        this.getResourcesList();
+        this.getResourcesList(this.pageInfo);
       } else {
         this.$notify({
           title: "失败",
@@ -125,7 +158,7 @@ export default {
           type: "success"
         });
         done();
-        this.getResourcesList();
+        this.getResourcesList(this.pageInfo);
       } else {
         this.$notify({
           title: "失败",
@@ -133,9 +166,49 @@ export default {
           type: "error"
         });
       }
-    }
+    },
+    // ↓ 表格字段排序回调 ↓
+    sortChange({ order, prop }) {
+      if (!order) {
+        this.query.sort = null;
+      } else {
+        this.query.sort = { [prop]: order === "ascending" ? 1 : -1 };
+      }
+      this.getResourcesList(this.pageInfo);
+    },
+    // ↓ 表格字段搜索 ↓
+    async searchChange(where, done) {
+      for (const key in where) {
+        let field = this.option.column.find(v => v.prop === key);
+        if (field.regex) {
+          where[key] = { $regex: where[key] };
+        }
+      }
+      this.query.where = where;
+      await this.getResourcesList(this.pageInfo);
+      done();
+    },
+    // ↓ 重置 表格字段搜索 ↓
+    searchReset(where) {
+      this.query.where = null;
+      this.getResourcesList(this.pageInfo);
+    },
+    // ↓ 上传查看前的回调 ↓
+    uploadPreview(file, column, done) {
+      console.info(file, column);
+      done(); //默认执行打开方法
+    },
+    // ↓ 上传失败错误回调 ↓
+    uploadError(error, column) {},
+    // ↓ 上传超过长度限制回调 ↓
+    uploadExceed(limit, files, fileList, column) {},
+    // ↓ 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止删除 ↓
+    uploadDelete(file, column) {},
+    // ↓ 上传前的回调 done用于继续图片上传，loading用于中断操作 ↓
+    uploadBefore(file, done, loading) {},
+    // ↓ 上传后的回调 done用于结束操作，loading用于中断操作 ↓
+    uploadAfter(res, done) {}
   }
 };
 </script>
-
 <style></style>

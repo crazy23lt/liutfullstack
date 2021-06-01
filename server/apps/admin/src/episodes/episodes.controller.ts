@@ -24,17 +24,19 @@ export class EpisodesController {
       },
       border: true,
       stripe: true,
-      page: false,
+      page: true,
       align: 'center',
       menuAlign: 'center',
       column: [
         {
           label: '课时名称',
           prop: 'name',
+          sortable:true,
         },
         {
           label: '课时文件',
           prop: 'file',
+          sortable:true,
         },
       ],
     };

@@ -1,9 +1,16 @@
 import { Course } from '@libs/db/models/course.model';
-import { Controller, Get } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Crud } from 'nestjs-mongoose-crud';
 import { InjectModel } from 'nestjs-typegoose';
 import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 @Crud({
   model: Course,
 })
@@ -45,19 +52,10 @@ export class CoursesController {
         {
           label: '课程封面',
           prop: 'cover',
-          sortable: false,
           type: 'upload',
           listType: 'picture-img',
-          tip: '只能上传jpg/png课程封面，且不超过500kb',
           action: 'upload',
-          span: 24,
-          propsHttp: {
-            home: 'http://localhost:3100/image/',
-          },
-          canvasOption: {
-            text: 'avue',
-            ratio: 0.1,
-          },
+          row: true,
         },
       ],
     };

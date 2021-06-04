@@ -7,6 +7,7 @@
           :table-loading="loading"
           :data="data"
           :option="option"
+          v-model="form"
           @refresh-change="refresh"
           @row-save="rowSave"
           @row-update="rowUpdate"
@@ -34,7 +35,8 @@ import {
   resourcesEdit,
   resourcesDel,
   resourcesOption,
-  resourcesCreate
+  resourcesCreate,
+  resourcesUpload
 } from "@/api/crud";
 export default {
   data() {
@@ -43,6 +45,7 @@ export default {
       loading: true,
       data: [],
       option: {},
+      form: {},
       pageInfo: {
         pageSize: 5,
         pagerCount: 5,
@@ -195,19 +198,32 @@ export default {
     },
     // ↓ 上传查看前的回调 ↓
     uploadPreview(file, column, done) {
-      console.info(file, column);
-      done(); //默认执行打开方法
+      done();
+      console.info("上传查看前的回调:uploadPreview");
     },
     // ↓ 上传失败错误回调 ↓
-    uploadError(error, column) {},
+    uploadError(error, column) {
+      console.info("上传失败错误回调:uploadError");
+    },
     // ↓ 上传超过长度限制回调 ↓
-    uploadExceed(limit, files, fileList, column) {},
+    uploadExceed(limit, files, fileList, column) {
+      console.info("上传超过长度限制回调:uploadExceed");
+    },
     // ↓ 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止删除 ↓
-    uploadDelete(file, column) {},
+    uploadDelete(file, column) {
+      console.info("删除之前:uploadDelete", file, column);
+    },
     // ↓ 上传前的回调 done用于继续图片上传，loading用于中断操作 ↓
-    uploadBefore(file, done, loading) {},
+    async uploadBefore(file, done, loading) {
+      var newFile = new File([file], "1234", { type: file.type });
+      done(newFile);
+      loading();
+    },
     // ↓ 上传后的回调 done用于结束操作，loading用于中断操作 ↓
-    uploadAfter(res, done) {}
+    uploadAfter(res, done) {
+      console.info("上传之后:uploadAfter", res);
+      done();
+    }
   }
 };
 </script>

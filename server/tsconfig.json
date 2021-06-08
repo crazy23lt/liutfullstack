@@ -12,8 +12,12 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@libs/db": ["libs/db/src"],
-      "@libs/db/*": ["libs/db/src/*"],
+      "@libs/db": [
+        "libs/db/src"
+      ],
+      "@libs/db/*": [
+        "libs/db/src/*"
+      ]
     }
   }
 }

@@ -20,7 +20,9 @@ export class AdminController {
   @UseInterceptors(FileInterceptor('file'))
   async upload(@UploadedFile('file') file) {
     return {
-      url: `http://localhost:3000/uploads/${file.filename}`,
+      code: 200,
+      msh: '请求成功',
+      data: file,
     };
   }
 }

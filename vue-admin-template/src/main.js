@@ -4,7 +4,7 @@ import "@/styles/index.scss"; // global css
 import App from "./App";
 import store from "./store";
 import router from "./router";
-import "@/plugins/ele-form";
+// import "@/plugins/ele-form";
 import "@/plugins/element-ui";
 import "@/plugins/avue";
 import "@/icons"; // icon

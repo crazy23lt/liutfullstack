@@ -198,30 +198,23 @@ export default {
     },
     // ↓ 上传查看前的回调 ↓
     uploadPreview(file, column, done) {
-      done();
-      console.info("上传查看前的回调:uploadPreview");
+      done(); //默认执行打开方法
     },
     // ↓ 上传失败错误回调 ↓
-    uploadError(error, column) {
-      console.info("上传失败错误回调:uploadError");
-    },
+    uploadError(error, column) {},
     // ↓ 上传超过长度限制回调 ↓
-    uploadExceed(limit, files, fileList, column) {
-      console.info("上传超过长度限制回调:uploadExceed");
-    },
+    uploadExceed(limit, files, fileList, column) {},
     // ↓ 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止删除 ↓
-    uploadDelete(file, column) {
-      console.info("删除之前:uploadDelete", file, column);
+    uploadDelete(column, file) {
+      return this.$confirm(`这里是自定义的，是否确定移除该选项？`);
     },
-    // ↓ 上传前的回调 done用于继续图片上传，loading用于中断操作 ↓
-    async uploadBefore(file, done, loading) {
+    uploadBefore(file, done, loading, column) {
+      //如果你想修改file文件,由于上传的file是只读文件，必须复制新的file才可以修改名字，完后赋值到done函数里,如果不修改的话直接写done()即可
       var newFile = new File([file], "1234", { type: file.type });
       done(newFile);
-      loading();
     },
     // ↓ 上传后的回调 done用于结束操作，loading用于中断操作 ↓
-    uploadAfter(res, done) {
-      console.info("上传之后:uploadAfter", res);
+    uploadAfter(res, done, loading, column) {
       done();
     }
   }

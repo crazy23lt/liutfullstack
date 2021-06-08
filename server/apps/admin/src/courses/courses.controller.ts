@@ -54,8 +54,9 @@ export class CoursesController {
           prop: 'cover',
           type: 'upload',
           listType: 'picture-img',
-          action: 'upload',
+          action: '/upload',
           row: true,
+          tip: '只能上传jpg/png用户头像，且不超过500kb',
         },
       ],
     };

@@ -6,11 +6,22 @@ import { UsersModule } from './users/users.module';
 import { CoursesModule } from './courses/courses.module';
 import { EpisodesModule } from './episodes/episodes.module';
 import { MulterModule } from '@nestjs/platform-express';
-
+const MAO = require('multer-aliyun-oss');
 @Module({
   imports: [
+    // ↓ 文件存储 ↓
     MulterModule.register({
-      dest: 'uploads',
+      // ↓ 存储到阿里云oss ↓
+      storage: MAO({
+        config: {
+          region: 'oss-cn-shenzhen',
+          accessKeyId: 'LTAI5tEi76UD6mLms1mGr8QS',
+          accessKeySecret: 'ZEg9jAun051YP5fEL9HEdl9fm41a37',
+          bucket: 'liutfullstack',
+        },
+      }),
+      // ↓ （存储到本地）目标文件夹 ↓
+      // dest: 'uploads',
     }),
     DbModule,
     UsersModule,

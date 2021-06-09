@@ -1,6 +1,5 @@
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Episode } from './episode.model';
 @modelOptions({
   schemaOptions: {
     timestamps: true,
@@ -13,6 +12,5 @@ export class Course {
   @ApiProperty({ description: '封面图' })
   @prop()
   cover: string;
-  @prop({ itemsRef: 'Episode' })
-  episodes: Ref<Episode>[];
+
 }

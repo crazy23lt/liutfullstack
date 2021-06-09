@@ -12,16 +12,25 @@ const models = TypegooseModule.forFeature([User, Course, Episode]);
 // ↑ 注册成全局模块 ↑
 @Module({
   imports: [
-    TypegooseModule.forRoot(
-      // ↑ 连接mongodb ↑
-      'mongodb://fullstack_admin:liut_admin@localhost:27017/nestfullstack',
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
+    // ↓ 连接mongodb （同步加载） 在 common.module中导入了全局配置模块和此模块，两模块内部有引用（process.env.DB）因此此处要使用异步加载 ↓
+    TypegooseModule.forRootAsync({
+      useFactory() {
+        return {
+          uri: process.env.DB,
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+          useFindAndModify: false,
+          useCreateIndex: true,
+        };
       },
-    ),
+    }),
+    // ↓ 连接mongodb （同步加载） ↓
+    // TypegooseModule.forRoot(process.env.DB, {
+    //   useNewUrlParser: true,
+    //   useUnifiedTopology: true,
+    //   useFindAndModify: false,
+    //   useCreateIndex: true,
+    // }),
     models,
     // ↑ 导入所有使用的模型 ↑
   ],

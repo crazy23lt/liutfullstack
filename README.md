@@ -11,6 +11,8 @@ _创建两个服务，后台系统与客户端系统_
 - `server` 服务端
   - `apps - admin` 客户端服务
   - `apps - server` 后台系统服务
+  - `libs - common` 子应用公共模块
+  - `libs - db` 数据库模块
 
 ### server
 
@@ -79,5 +81,13 @@ _条件查询(query)_
 - `{"sort":{"_id":-1}}`
 - `{"where":{"name":{"$regex":"awdawd}}}`
 - `{"limit":2,"page",2}`
+
+### nestjs/config 全局配置管理
+
+`cnpm i --save @nestjs/config`
+
+创建 `.env` 文件进行环境变量管理
+
+创建 `.env.example` 环境变量范例文件,供其他开发人员编写各自的环境变量
 
 ## 前端

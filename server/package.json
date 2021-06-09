@@ -12,6 +12,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start_admin:dev": "nest start --watch admin",
+    "start_server:dev": "nest start --watch server",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",
+    "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",
     "@typegoose/typegoose": "^7.6.0",
@@ -81,7 +83,9 @@
     ],
     "moduleNameMapper": {
       "@libs/db/(.*)": "<rootDir>/libs/db/src/$1",
-      "@libs/db": "<rootDir>/libs/db/src"
+      "@libs/db": "<rootDir>/libs/db/src",
+      "@app/common/(.*)": "<rootDir>/libs/common/src/$1",
+      "@app/common": "<rootDir>/libs/common/src"
     }
   }
 }

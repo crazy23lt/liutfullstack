@@ -60,5 +60,8 @@
     "node": ">=8.9",
     "npm": ">= 3.0.0"
   },
+  "eslintConfig": {
+    "parser": "babel-eslint"
+  },
   "license": "MIT"
 }

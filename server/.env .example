@@ -1,0 +1,11 @@
+# 数据库
+DB=mongodb://{username}:{password}@localhost:27017/{dbname}
+# 后台API服务端口号
+ADMIN_PORT=3008
+# 客户端API服务端口号
+SERVER_PORT=3008
+# aliyun oss 存储
+REGION=oss-cn-shenzhen
+ACCESSKEYID=~~~~
+ACCESSKEYSECRET=~~~~
+BUCKET=liutfullstack

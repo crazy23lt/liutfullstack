@@ -1,3 +1,4 @@
+import { Course } from '@libs/db/models/course.model';
 import { Controller, Get } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Crud } from 'nestjs-mongoose-crud';
@@ -13,9 +14,17 @@ export class EpisodesController {
   constructor(
     @InjectModel(Episode)
     private readonly model: ReturnModelType<typeof Episode>,
+    @InjectModel(Course)
+    private readonly courseModel: ReturnModelType<typeof Course>,
   ) {}
   @Get('options')
-  avueOptions() {
+  async avueOptions() {
+    const courses = (await this.courseModel.find()).map((v) => {
+      return {
+        label: v.name,
+        value: v._id,
+      };
+    });
     return {
       title: '课时管理',
       titleSize: 'h3',
@@ -29,14 +38,28 @@ export class EpisodesController {
       menuAlign: 'center',
       column: [
         {
-          label: '课时名称',
-          prop: 'name',
-          sortable:true,
+          label: '所属课程',
+          prop: 'course',
+          type: 'select',
+          row: true,
+          dicData: courses,
         },
         {
-          label: '课时文件',
+          label: '课时名称',
+          span: 24,
+          prop: 'name',
+          sortable: true,
+        },
+        {
+          label: '课时视频',
           prop: 'file',
-          sortable:true,
+          type: 'upload',
+          accept: 'video/mp4',
+          loadText: '附件上传中，请稍等',
+          row: true,
+          tip: '只能上传jpg/png用户头像，且不超过500kb',
+          action: '/upload',
+          listType: 'picture-img',
         },
       ],
     };

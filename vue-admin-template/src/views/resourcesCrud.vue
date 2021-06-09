@@ -215,6 +215,7 @@ export default {
     },
     // ↓ 上传后的回调 done用于结束操作，loading用于中断操作 ↓
     uploadAfter(res, done, loading, column) {
+      console.info(res);
       done();
     }
   }

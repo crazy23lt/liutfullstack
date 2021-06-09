@@ -210,12 +210,11 @@ export default {
     },
     uploadBefore(file, done, loading, column) {
       //如果你想修改file文件,由于上传的file是只读文件，必须复制新的file才可以修改名字，完后赋值到done函数里,如果不修改的话直接写done()即可
-      var newFile = new File([file], "1234", { type: file.type });
+      var newFile = new File([file], column.prop, { type: file.type });
       done(newFile);
     },
     // ↓ 上传后的回调 done用于结束操作，loading用于中断操作 ↓
     uploadAfter(res, done, loading, column) {
-      console.info(res);
       done();
     }
   }

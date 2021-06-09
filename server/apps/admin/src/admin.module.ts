@@ -19,6 +19,16 @@ const MAO = require('multer-aliyun-oss');
           accessKeySecret: 'ZEg9jAun051YP5fEL9HEdl9fm41a37',
           bucket: 'liutfullstack',
         },
+        filename: function (req, file, cb) {
+          cb(
+            null,
+            file.originalname +
+              '-' +
+              Date.now() +
+              '.' +
+              file.mimetype.match(/\/(\S*)/)[1],
+          );
+        },
       }),
       // ↓ （存储到本地）目标文件夹 ↓
       // dest: 'uploads',

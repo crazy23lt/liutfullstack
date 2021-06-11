@@ -39,7 +39,7 @@ module.exports = {
     // before: require("./mock/mock-server.js"),
     proxy: {
       "/dev-api": {
-        target: "http://localhost:3000",
+        target: process.env.VUE_APP_BASE_API,
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 是否改变域名
         pathRewrite: {

@@ -55,3 +55,9 @@ export function resourcesUpload({ params }) {
     data: params
   });
 }
+export function error() {
+  return axios({
+    url: `awdawdawdawdawd`,
+    method: "POST"
+  });
+}

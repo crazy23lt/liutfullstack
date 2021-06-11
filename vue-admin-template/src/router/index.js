@@ -98,6 +98,37 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: "/form",
+    component: Layout,
+    redirect: "/form/one",
+    name: "Operate",
+    meta: { title: "表单缓存", icon: "el-icon-folder" },
+    children: [
+      {
+        path: "/one",
+        name: "one",
+        component: () => import("@/views/form/form01.vue"),
+        meta: {
+          title: "表单01",
+          icon: "el-icon-tickets",
+          resources: "users",
+          keepAlive: true
+        }
+      },
+      {
+        path: "/two",
+        name: "two",
+        component: () => import("@/views/form/form02.vue"),
+        meta: {
+          keepAlive: true,
+          title: "表单01",
+          icon: "el-icon-tickets",
+          resources: "users"
+        }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true }

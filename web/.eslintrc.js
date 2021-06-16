@@ -17,6 +17,6 @@ module.exports = {
   rules: {
     semi: ["error", "always"],
     quotes: ["error", "double"],
-    linebreakStyle: ["error", "windows"],
+    "linebreak-style": ["error", "windows"],
   },
 };

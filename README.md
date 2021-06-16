@@ -90,8 +90,33 @@ _条件查询(query)_
 
 创建 `.env.example` 环境变量范例文件,供其他开发人员编写各自的环境变量
 
+### mongose 
+
+#### 查询
+
+`this.userModel.find({username:'user1'});`
+
+
 ## 前端
 
 - *技术栈*
   - [NuxtJS](https://zh.nuxtjs.org/)
   - [Vuetify](https://vuetify.cn/zh-Hans/)
+
+```js
+  async asyncData({ $axios }) {
+    const data = await $axios.$get("/");
+    return { private_asyncData: data };
+  },
+  async fetch() {
+    this.private_fetch = await this.test();
+  },
+  async mounted() {
+    this.private_mounted = await this.test();
+  },
+  methods: {
+    test() {
+      return this.$axios.$get("/");
+    },
+  },
+```

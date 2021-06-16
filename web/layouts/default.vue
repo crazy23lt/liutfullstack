@@ -22,7 +22,7 @@
         </v-list-item>
         <!-- 抽屉名称 -->
         <v-subheader class="mt-4 grey--text text--darken-1"
-          >SUBSCRIPTIONS</v-subheader
+          >用户中心</v-subheader
         >
         <v-list>
           <v-list-item v-for="item in items2" :key="item.text" link>
@@ -89,15 +89,14 @@ export default {
     return {
       drawer: null,
       items: [
+        { icon: "mdi-trending-up", text: "主站", link: "/" },
         { icon: "mdi-trending-up", text: "热门课程", link: "/courses" },
-        {
-          icon: "mdi-youtube-subscription",
-          text: "热门评论",
-          link: "/comments",
-        },
-        { icon: "mdi-history", text: "History" },
-        { icon: "mdi-playlist-play", text: "Playlists" },
-        { icon: "mdi-clock", text: "Watch Later" },
+        { icon: "mdi-history", text: "番剧" },
+        { icon: "mdi-playlist-play", text: "游戏中心" },
+        { icon: "mdi-clock", text: "直播" },
+        { icon: "mdi-clock", text: "会员购" },
+        { icon: "mdi-clock", text: "赛事" },
+        { icon: "mdi-clock", text: "漫画" },
       ],
       items2: [
         { picture: 28, text: "Joseph" },

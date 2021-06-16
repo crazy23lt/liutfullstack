@@ -1,5 +1,5 @@
 import colors from "vuetify/es5/util/colors";
-
+require("dotenv").config();
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head  外部资源加
   head: {
@@ -20,7 +20,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins 全局注入属性或者函数
-  plugins: [],
+  plugins: ["~/plugins/axios"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -37,10 +37,24 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    "@nuxtjs/proxy",
+    "@nuxtjs/dotenv",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    prefix: "/api",
+    proxy: true,
+  },
+  proxy: {
+    "/api": {
+      changeOrigin: true,
+      target: process.env.BASE_API, // 允许跨域的服务器地址
+      pathRewrite: {
+        "^/api": "",
+      },
+    },
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -63,10 +77,4 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-
-  // 配置启动端口
-  serve: {
-    port: 8000,
-    host: "127.0.0.1",
-  },
 };

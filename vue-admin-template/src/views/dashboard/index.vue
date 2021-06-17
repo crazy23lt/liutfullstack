@@ -5,16 +5,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
+import { error } from "@/api/crud";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   computed: {
-    ...mapGetters([
-      'name'
-    ])
+    ...mapGetters(["name"])
+  },
+  mounted() {
+    error();
+    console.info(awdawd);
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

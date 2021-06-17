@@ -2,3 +2,38 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+
+
+/* ==================
+       自定义偏移变量   
+ ==================== */
+$spaceTypes: (
+  m: margin,
+  p: padding,
+);
+$spaceDirections: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left,
+);
+$spaceSizes: (
+  2: 2px,
+  4: 4px,
+  8: 8px,
+  10: 10px,
+  15: 15px,
+  20: 20px,
+  24: 24px,
+  30: 30px,
+  40: 40px,
+  50: 50px,
+  60: 60px,
+  70: 70px,
+  80: 80px,
+  100: 100px,
+  140: 140px,
+);
+
+@import "./mixin";
+@import "./utils";

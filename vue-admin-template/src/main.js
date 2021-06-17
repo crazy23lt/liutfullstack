@@ -21,6 +21,12 @@ import "@/permission"; // permission control
 //   const { mockXHR } = require('../mock')
 //   mockXHR()
 // }
+Vue.config.errorHandler = function(err) {
+  console.info("errorHandler", new Date(), { err });
+};
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+  console.info("onerror", new Date(), { msg, url, lineNo, columnNo, error });
+};
 Vue.config.productionTip = false;
 
 new Vue({

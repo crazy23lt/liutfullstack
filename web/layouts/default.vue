@@ -4,7 +4,12 @@
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
         <!-- 抽屉 -->
-        <v-list-item v-for="item in items" :key="item.text" link>
+        <v-list-item
+          :to="item.link"
+          v-for="item in items"
+          :key="item.text"
+          link
+        >
           <!-- 抽屉格子 -->
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -17,7 +22,7 @@
         </v-list-item>
         <!-- 抽屉名称 -->
         <v-subheader class="mt-4 grey--text text--darken-1"
-          >SUBSCRIPTIONS</v-subheader
+          >用户中心</v-subheader
         >
         <v-list>
           <v-list-item v-for="item in items2" :key="item.text" link>
@@ -50,7 +55,9 @@
     </v-navigation-drawer>
     <!-- 导航栏 -->
     <v-app-bar app clipped-left color="red" dense>
+      <!-- 抽屉折叠按钮 -->
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <!-- 标题logo -->
       <v-icon class="mx-4" large> mdi-youtube </v-icon>
       <v-toolbar-title class="mr-12 align-center">
         <span class="title">全栈之巅</span>
@@ -59,7 +66,7 @@
       <v-row align="center" style="max-width: 650px">
         <v-text-field
           :append-icon-cb="() => {}"
-          placeholder="Search..."
+          placeholder="搜点啥...."
           single-line
           append-icon="mdi-magnify"
           color="white"
@@ -82,23 +89,26 @@ export default {
     return {
       drawer: null,
       items: [
-        { icon: 'mdi-trending-up', text: 'Most Popular' },
-        { icon: 'mdi-youtube-subscription', text: 'Subscriptions' },
-        { icon: 'mdi-history', text: 'History' },
-        { icon: 'mdi-playlist-play', text: 'Playlists' },
-        { icon: 'mdi-clock', text: 'Watch Later' },
+        { icon: "mdi-trending-up", text: "主站", link: "/" },
+        { icon: "mdi-trending-up", text: "热门课程", link: "/courses" },
+        { icon: "mdi-history", text: "番剧" },
+        { icon: "mdi-playlist-play", text: "游戏中心" },
+        { icon: "mdi-clock", text: "直播" },
+        { icon: "mdi-clock", text: "会员购" },
+        { icon: "mdi-clock", text: "赛事" },
+        { icon: "mdi-clock", text: "漫画" },
       ],
       items2: [
-        { picture: 28, text: 'Joseph' },
-        { picture: 38, text: 'Apple' },
-        { picture: 48, text: 'Xbox Ahoy' },
-        { picture: 58, text: 'Nokia' },
-        { picture: 78, text: 'MKBHD' },
+        { picture: 28, text: "Joseph" },
+        { picture: 38, text: "Apple" },
+        { picture: 48, text: "Xbox Ahoy" },
+        { picture: 58, text: "Nokia" },
+        { picture: 78, text: "MKBHD" },
       ],
-    }
+    };
   },
   created() {
-    this.$vuetify.theme.dark = true
+    this.$vuetify.theme.dark = true;
   },
-}
+};
 </script>

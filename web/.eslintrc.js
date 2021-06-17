@@ -5,14 +5,18 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: "babel-eslint",
   },
   extends: [
-    '@nuxtjs',
-    'plugin:prettier/recommended',
-    'plugin:nuxt/recommended',
+    "@nuxtjs",
+    "plugin:prettier/recommended",
+    "plugin:nuxt/recommended",
   ],
   plugins: [],
   // add your custom rules here
-  rules: {},
-}
+  rules: {
+    semi: ["error", "always"],
+    quotes: ["error", "double"],
+    "linebreak-style": ["error", "windows"],
+  },
+};
